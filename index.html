@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MC WDH 2026 – The Surprise Box</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--p1:#4B0082;--p2:#8A2BE2;--y:#FFD928;--w:#fff;--lv:#E6D6FF;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0}
+html,body{min-height:100%;font-family:'Plus Jakarta Sans',Poppins,system-ui,sans-serif;color:var(--w);background:var(--p1);overflow-x:hidden}
+body{background:radial-gradient(circle at 50% 30%,var(--p2),var(--p1) 70%)}
+.stage{display:none;min-height:100vh;padding:90px 20px 60px;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;position:relative;animation:in .8s ease both}
+.stage.on{display:flex}
+@keyframes in{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+h1{font-size:clamp(28px,6vw,56px);font-weight:800;line-height:1.1;text-shadow:0 0 30px rgba(255,217,40,.5)}
+h2{font-size:clamp(22px,4vw,38px);font-weight:800;color:var(--y)}
+p{max-width:560px;color:var(--lv);line-height:1.6}
+.btn{background:linear-gradient(135deg,var(--y),#ffb800);color:var(--p1);border:0;border-radius:999px;padding:16px 34px;font:800 16px inherit;font-family:inherit;cursor:pointer;box-shadow:0 0 0 0 rgba(255,217,40,.7);animation:pulse 2s infinite;margin-top:10px;transition:transform .2s}
+.btn:hover{transform:scale(1.07)}
+@keyframes pulse{70%{box-shadow:0 0 0 20px rgba(255,217,40,0)}}
+#logo{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:14px;z-index:20;height:48px;display:flex;align-items:center;gap:8px;font-weight:800}
+#logo img{height:48px}
+#logo .ph{width:48px;height:48px;border-radius:50%;background:var(--y);color:var(--p1);display:grid;place-items:center;font-size:14px;box-shadow:0 0 18px var(--y)}
+#skip{position:fixed;top:calc(16px + env(safe-area-inset-top,0px));right:14px;z-index:20;background:rgba(255,255,255,.15);color:#fff;border:1px solid var(--lv);border-radius:999px;padding:8px 16px;font:600 13px inherit;font-family:inherit;cursor:pointer;backdrop-filter:blur(6px)}
+#prog{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:20}
+#prog i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.3);transition:.4s}
+#prog i.a{background:var(--y);box-shadow:0 0 10px var(--y);width:26px;border-radius:6px}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
+#dark{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:40;transition:opacity .5s}
+.glow{position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(var(--y),transparent 65%);opacity:.45;filter:blur(20px);animation:gl 3s ease-in-out infinite alternate}
+@keyframes gl{to{opacity:.8;transform:scale(1.15)}}
+.star{position:absolute;color:var(--y);animation:tw 2s ease-in-out infinite}
+@keyframes tw{50%{opacity:.2;transform:scale(.5) rotate(90deg)}}
+/* 3D box */
+.scene{perspective:900px;position:relative;display:grid;place-items:center;width:calc(var(--s)*1.4);height:calc(var(--s)*1.5);cursor:pointer;animation:fl 3s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-16px)}}
+.box{position:relative;width:var(--s);height:var(--s);transform-style:preserve-3d;transform:rotateX(-18deg) rotateY(-28deg);margin-top:calc(var(--s)*.15)}
+.f{position:absolute;width:var(--s);height:var(--s);background:var(--c1,var(--p2));border:2px solid rgba(255,255,255,.2)}
+.f::before{content:"";position:absolute;left:42%;width:16%;top:0;bottom:0;background:var(--c2,var(--y))}
+.f.fr{transform:translateZ(calc(var(--s)/2))}.f.bk{transform:rotateY(180deg) translateZ(calc(var(--s)/2))}
+.f.rt{transform:rotateY(90deg) translateZ(calc(var(--s)/2))}.f.lf{transform:rotateY(-90deg) translateZ(calc(var(--s)/2))}
+.f.bt{transform:rotateX(-90deg) translateZ(calc(var(--s)/2))}
+.f.in{background:radial-gradient(var(--y),#fff);transform:rotateX(90deg) translateZ(calc(var(--s)*.3));opacity:0;transition:.6s}
+.lid{position:absolute;inset:0;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.5,-.4,.3,1.3),opacity 1s;transform:translateY(calc(var(--s)*-.5))}
+.lid .f{height:calc(var(--s)*.22);transform-origin:center}
+.lid .fr{transform:translateZ(calc(var(--s)/2)) translateY(calc(var(--s)*-.11)) }
+.lid .bk{transform:rotateY(180deg) translateZ(calc(var(--s)/2)) translateY(calc(var(--s)*-.11))}
+.lid .rt{transform:rotateY(90deg) translateZ(calc(var(--s)/2)) translateY(calc(var(--s)*-.11))}
+.lid .lf{transform:rotateY(-90deg) translateZ(calc(var(--s)/2)) translateY(calc(var(--s)*-.11))}
+.lid .tp{height:var(--s);transform:rotateX(90deg) translateZ(calc(var(--s)*.0)) translateY(0);top:calc(var(--s)*-.22);background:var(--c1,var(--p2))}
+.lid .tp::after{content:"";position:absolute;left:0;right:0;top:42%;height:16%;background:var(--c2,var(--y))}
+.lid .bow{position:absolute;left:50%;top:calc(var(--s)*-.3);font-size:calc(var(--s)*.35);transform:translateX(-50%) translateZ(10px);filter:drop-shadow(0 0 8px var(--y))}
+.scene.open .lid{transform:translateY(calc(var(--s)*-1.5)) rotateZ(25deg);opacity:0}
+.scene.open .f.in{opacity:1}
+.scene.open{animation:none}
+.flash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:45}
+.flash.go{animation:fh .9s ease}
+@keyframes fh{0%{opacity:0}25%{opacity:.95}100%{opacity:0}}
+/* envelope */
+.env{position:relative;width:min(300px,80vw);height:200px;background:var(--p2);border-radius:10px;cursor:pointer;box-shadow:0 20px 50px #0008;animation:fl 3s ease-in-out infinite;margin:20px 0 60px}
+.env .flap{position:absolute;inset:0 0 auto 0;height:110px;background:#6a1bbf;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .7s;z-index:3}
+.env .body{position:absolute;inset:0;background:linear-gradient(135deg,var(--p2),var(--p1));clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%);border-radius:10px;z-index:2}
+.seal{position:absolute;left:50%;top:92px;transform:translateX(-50%);width:44px;height:44px;border-radius:50%;background:var(--y);color:var(--p1);display:grid;place-items:center;font-size:24px;z-index:4;box-shadow:0 0 16px var(--y);transition:.5s}
+.letter{position:absolute;left:8%;right:8%;top:10px;height:170px;background:var(--lv);color:var(--p1);border-radius:8px;z-index:1;padding:16px 10px;transition:transform .9s .5s;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.letter b{font-size:18px}.letter span{font-size:13px}
+.env.open .flap{transform:rotateX(180deg);z-index:0}
+.env.open .seal{opacity:0;transform:translateX(-50%) scale(2)}
+.env.open .letter{transform:translateY(-120px);z-index:5}
+.env.open{animation:none}
+#rev{display:none}
+.mic{font-size:clamp(90px,18vw,180px);filter:drop-shadow(0 0 30px var(--y));animation:fl 3s ease-in-out infinite}
+.ann{display:flex;flex-direction:column;gap:12px;align-items:center}
+@media(min-width:800px){#s5{flex-direction:row;gap:50px}}
+/* members */
+#s6{justify-content:flex-start;padding-top:110px}
+.grid{display:grid;grid-template-columns:1fr;gap:22px;width:min(1100px,100%);margin-top:20px}
+@media(min-width:800px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{position:relative;background:linear-gradient(160deg,var(--p2),var(--p1));border:2px solid var(--y);border-radius:24px;padding:28px 20px 24px;box-shadow:0 0 25px rgba(255,217,40,.25);opacity:0;transform:translateY(40px) rotateX(20deg);transition:transform .35s,box-shadow .35s;transform-style:preserve-3d;overflow:hidden}
+.card.show{animation:cin .8s forwards}
+@keyframes cin{to{opacity:1;transform:none}}
+.card:hover{transform:translateY(-8px) rotateX(6deg) rotateY(-4deg) scale(1.03);box-shadow:0 20px 50px rgba(255,217,40,.5)}
+.card .n{font-size:72px;font-weight:800;color:var(--y);line-height:1;opacity:.95}
+.card .ic{position:absolute;top:16px;right:18px;font-size:28px}
+.card h3{font-size:21px;margin:10px 0 14px}
+.tag{display:inline-block;background:var(--y);color:var(--p1);font-weight:800;font-size:11px;letter-spacing:1.5px;padding:6px 14px;border-radius:999px}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.25) 50%,transparent 60%);transform:translateX(-120%);animation:sh 4s infinite}
+@keyframes sh{to{transform:translateX(120%)}}
+.msg{background:var(--lv);color:var(--p1);border-radius:28px;padding:30px;max-width:720px;margin:0 auto}
+.msg p{color:var(--p1);margin:10px auto}
+.tl{font-weight:800;color:var(--p2);letter-spacing:1px;margin-top:14px}
+#s7,#s8{min-height:70vh}
+#s8{background:linear-gradient(160deg,var(--p1),var(--p2) 50%,#c9a300)}
+</style>
+</head>
+<body>
+<div id="logo"><span class="ph" id="logoPh">WDH</span></div>
+<button id="skip">Skip ⏭</button>
+<div id="prog"></div><div id="dark"></div><div class="flash" id="flash"></div><canvas id="fx"></canvas>
+
+<section class="stage on" id="s0">
+  <div class="glow"></div>
+  <span class="star" style="top:22%;left:18%">✦</span><span class="star" style="top:30%;right:16%;animation-delay:.6s">✦</span><span class="star" style="bottom:22%;left:25%;animation-delay:1s">★</span><span class="star" style="bottom:28%;right:22%;animation-delay:1.4s">✦</span>
+  <h1>HELLO, FUTURE VOICE OF WDH!</h1>
+  <p>Something special is waiting for you...</p>
+  <div class="scene" style="--s:150px" data-next="1"><div class="box"><div class="f fr"></div><div class="f bk"></div><div class="f lf"></div><div class="f rt"></div><div class="f bt"></div><div class="f in"></div><div class="lid"><div class="f fr"></div><div class="f bk"></div><div class="f lf"></div><div class="f rt"></div><div class="f tp"></div><div class="bow">🎀</div></div></div></div>
+  <h2 style="font-size:20px">Are You Ready to Discover the Surprise?</h2>
+  <button class="btn" data-open="0">OPEN YOUR SURPRISE</button>
+</section>
+
+<section class="stage" id="s1">
+  <div class="glow"></div>
+  <h1>WAIT... THERE'S MORE!</h1>
+  <p>Surprise pertama belum menjadi kejutan terakhir. Masih ada sesuatu yang menunggumu di dalam!</p>
+  <div class="scene" style="--s:110px;--c1:#FFD928;--c2:#8A2BE2"><div class="box"><div class="f fr"></div><div class="f bk"></div><div class="f lf"></div><div class="f rt"></div><div class="f bt"></div><div class="f in"></div><div class="lid"><div class="f fr"></div><div class="f bk"></div><div class="f lf"></div><div class="f rt"></div><div class="f tp"></div><div class="bow">🎁</div></div></div></div>
+  <button class="btn" data-open="1">OPEN THE NEXT BOX</button>
+</section>
+
+<section class="stage" id="s2">
+  <h1>YOU ARE ONE STEP CLOSER!</h1>
+  <p>Something exciting is about to be revealed. Are you ready?</p>
+  <p id="hint"><b>Click the envelope to reveal the message.</b></p>
+  <div class="env" id="env"><div class="letter"><b>THIS IS YOUR MOMENT TO SHINE!</b><span>Get ready, because your new journey starts here!</span></div><div class="body"></div><div class="flap"></div><div class="seal">★</div></div>
+  <button class="btn" id="rev">REVEAL THE SURPRISE</button>
+</section>
+
+<section class="stage" id="s3">
+  <div class="glow" style="width:520px;height:520px"></div>
+  <div class="mic" style="position:absolute;top:18%;opacity:.5;font-size:110px">🎤</div>
+  <h1>THE MOMENT WE'VE BEEN WAITING FOR!</h1>
+  <p>Are you ready to know the result?</p>
+  <div class="scene" style="--s:200px;--c1:#4B0082;--c2:#FFD928;filter:drop-shadow(0 0 25px #8A2BE2)"><div class="box"><div class="f fr"></div><div class="f bk"></div><div class="f lf"></div><div class="f rt"></div><div class="f bt"></div><div class="f in"></div><div class="lid"><div class="f fr"></div><div class="f bk"></div><div class="f lf"></div><div class="f rt"></div><div class="f tp"></div><div class="bow">👑</div></div></div></div>
+  <button class="btn" data-open="3" style="font-size:20px;padding:20px 44px">UNLOCK THE RESULT</button>
+</section>
+
+<section class="stage" id="s5">
+  <div class="ann">
+    <p style="color:var(--y);font-weight:800;letter-spacing:3px">OFFICIAL ANNOUNCEMENT 2026</p>
+    <h1>CONGRATULATIONS!</h1>
+    <h2>YOU ARE OFFICIALLY PART OF MC WDH!</h2>
+    <p>Setelah melewati proses seleksi dan penantian yang panjang, akhirnya enam orang terpilih untuk memulai perjalanan baru bersama keluarga besar MC WDH.</p>
+    <p style="color:#fff;font-weight:800">Your Voice, Your Stage, Your Journey Begins Here!</p>
+    <button class="btn" id="toList">MEET THE MEMBERS</button>
+  </div>
+  <div class="mic">🎤</div>
+</section>
+
+<section class="stage" id="s6">
+  <h1>MEET OUR NEW MC WDH MEMBERS!</h1>
+  <p>These are the voices that will shine with us.</p>
+  <div class="grid" id="grid"></div>
+  <button class="btn" id="toMsg" style="margin-top:30px">CONTINUE ➜</button>
+</section>
+
+<section class="stage" id="s7">
+  <div class="msg">
+    <h2 style="color:var(--p1)">THIS IS JUST THE BEGINNING!</h2>
+    <p><b>Selamat kepada seluruh peserta yang berhasil lolos seleksi MC WDH 2026!</b></p>
+    <p>Kalian bukan hanya terpilih untuk menjadi bagian dari sebuah tim, tetapi juga akan memulai perjalanan untuk berkembang, belajar, membangun kepercayaan diri, dan menginspirasi banyak orang melalui suara.</p>
+    <p class="tl">SPEAK WITH CONFIDENCE, INSPIRE WITH YOUR VOICE.</p>
+  </div>
+  <button class="btn" id="toEnd">NEXT ➜</button>
+</section>
+
+<section class="stage" id="s8">
+  <div class="mic">🎤</div>
+  <h1>WELCOME TO THE FAMILY!</h1>
+  <h2 style="color:#fff">MC WDH IS WAITING FOR YOU!</h2>
+  <p style="color:#fff">Let's create unforgettable moments and inspire the world together.</p>
+  <button class="btn" id="again">BACK TO THE BEGINNING</button>
+</section>
+
+<script>
+// ====== Ganti dengan file/URL logo (mis. "logo.png" atau data URI) ======
+const LOGO_SRC = "";
+const NAMES = ["Aditya Arya Wiguna","Aynun Nazwa","Nazmalia Zahwa Kamalia","Nazwa Sahara","Syifa Nuzul Fitria","Tria Elisya","Zahra Ramadhani","Zahrotun Nabila"];
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+if(LOGO_SRC){$('#logo').innerHTML='<img src="'+LOGO_SRC+'" alt="Logo MC WDH">'}
+const ids=['s0','s1','s2','s3','s5','s6','s7','s8'];
+$('#prog').innerHTML=ids.map(()=>'<i></i>').join('');
+const icons=['🎤','🏆','⭐'];
+$('#grid').innerHTML=NAMES.map((n,i)=>`<div class="card"><span class="ic">${icons[i%3]}</span><div class="n">${String(i+1).padStart(2,'0')}</div><h3>${n}</h3><span class="tag">OFFICIALLY SELECTED</span></div>`).join('');
+
+// audio (opsional, hanya setelah interaksi)
+let ac;function pop(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();[523,659,784,1047].forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;o.type='triangle';g.gain.setValueAtTime(.12,ac.currentTime+i*.09);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+i*.09+.3);o.connect(g);g.connect(ac.destination);o.start(ac.currentTime+i*.09);o.stop(ac.currentTime+i*.09+.35)})}catch(e){}}
+
+function go(id){
+  $$('.stage').forEach(s=>s.classList.remove('on'));
+  $('#'+id).classList.add('on');window.scrollTo(0,0);
+  const i=ids.indexOf(id);$$('#prog i').forEach((d,k)=>d.classList.toggle('a',k===i));
+  if(id==='s6'){$$('.card').forEach((c,k)=>{c.classList.remove('show');setTimeout(()=>c.classList.add('show'),300+k*350)})}
+  if(id==='s5'||id==='s8')confetti();
+}
+function flash(){const f=$('#flash');f.classList.remove('go');void f.offsetWidth;f.classList.add('go')}
+function openBox(btn,next,dark){
+  const sc=btn.closest('.stage').querySelector('.scene');
+  btn.disabled=true;pop();
+  const run=()=>{sc.classList.add('open');setTimeout(flash,500);setTimeout(confetti,600,dark?200:80);setTimeout(()=>go(next),1900)};
+  if(dark){$('#dark').style.opacity=1;setTimeout(()=>{$('#dark').style.opacity=0;run()},700)}else run();
+}
+$$('[data-open]').forEach(b=>b.onclick=()=>{const k=+b.dataset.open;openBox(b,k===0?'s1':k===1?'s2':'s5',k===3)});
+$$('.scene').forEach(s=>s.onclick=()=>s.closest('.stage').querySelector('[data-open]').click());
+$('#env').onclick=()=>{if($('#env').classList.contains('open'))return;$('#env').classList.add('open');pop();$('#hint').style.display='none';setTimeout(()=>{$('#rev').style.display='inline-block'},1500)};
+$('#rev').onclick=()=>go('s3');
+// tahap 4 -> dramatis: tombol UNLOCK pindah ke s5
+$('#toList').onclick=()=>go('s6');$('#toMsg').onclick=()=>go('s7');$('#toEnd').onclick=()=>go('s8');
+$('#again').onclick=()=>{$$('.scene,.env').forEach(e=>e.classList.remove('open'));$$('[data-open]').forEach(b=>b.disabled=false);$('#rev').style.display='none';$('#hint').style.display='';go('s0')};
+$('#skip').onclick=()=>{go('s5')};
+// confetti
+const cv=$('#fx'),cx=cv.getContext('2d');let P=[],raf;
+function rs(){cv.width=innerWidth;cv.height=innerHeight}rs();addEventListener('resize',rs);
+function confetti(n=160){const cols=['#FFD928','#8A2BE2','#fff','#E6D6FF','#4B0082'];for(let i=0;i<n;i++)P.push({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*.5,vx:(Math.random()-.5)*3,vy:2+Math.random()*4,s:5+Math.random()*7,r:Math.random()*6,vr:(Math.random()-.5)*.3,c:cols[i%5]});if(!raf)tick()}
+function tick(){cx.clearRect(0,0,cv.width,cv.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);cx.restore()});P=P.filter(p=>p.y<cv.height+20);raf=P.length?requestAnimationFrame(tick):null}
+go('s0');
+</script>
+</body>
+</html>
